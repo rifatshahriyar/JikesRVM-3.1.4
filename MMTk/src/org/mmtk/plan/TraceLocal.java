@@ -125,7 +125,7 @@ public abstract class TraceLocal extends TransitiveClosure {
    * @param untraced <code>true</code> if <code>objLoc</code> is an untraced root.
    */
   @Inline
-  public final void processRootEdge(Address slot, boolean untraced) {
+  public void processRootEdge(Address slot, boolean untraced) {
     ObjectReference object;
     if (untraced) object = slot.loadObjectReference();
     else     object = VM.activePlan.global().loadObjectReference(slot);

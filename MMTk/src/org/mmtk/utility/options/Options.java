@@ -67,4 +67,7 @@ public final class Options {
   public static Verbose verbose;
   public static VerboseTiming verboseTiming;
   public static XmlStats xmlStats;
+  public static CycleTriggerFraction cycleTriggerFraction;
+  public static DefragTriggerFraction defragTriggerFraction;
+  public static SurvivorCopyMultiplier survivorCopyMultiplier;
 }

@@ -45,14 +45,14 @@ public class ForwardingWord {
    */
   private static final byte FORWARDING_NOT_TRIGGERED_YET = 0; // ...00
   /** If this bit is set, then forwarding of this object is incomplete */
-  private static final byte BEING_FORWARDED = 2; // ...10
+  private static final byte BEING_FORWARDED = 3; // ...10
   /** If this bit is set, then forwarding of this object has commenced */
-  private static final byte FORWARDED =       3; // ...11
+  private static final byte FORWARDED =       2; // ...11
   /** This mask is used to reveal which state this object is in with respect to forwarding */
   public static final byte FORWARDING_MASK =  3; // ...11
 
   public static final int FORWARDING_BITS = 2;
-
+  public static final byte CLEAR_FORWARDING = 1;
 
   /**
    * Either return the forwarding pointer if the object is already
@@ -127,7 +127,9 @@ public class ForwardingWord {
    */
   @Inline
   public static boolean isForwardedOrBeingForwarded(ObjectReference object) {
-    return (VM.objectModel.readAvailableByte(object) & FORWARDING_MASK) != 0;
+    //return (VM.objectModel.readAvailableByte(object) & FORWARDING_MASK) != 0;
+    byte value = (byte) (VM.objectModel.readAvailableByte(object) & FORWARDING_MASK);
+    return (value == BEING_FORWARDED)  || (value == FORWARDED);
   }
 
   /**
@@ -138,7 +140,9 @@ public class ForwardingWord {
    */
   @Inline
   public static boolean stateIsForwardedOrBeingForwarded(Word header) {
-    return (header.toInt() & FORWARDING_MASK) != 0;
+    //return (header.toInt() & FORWARDING_MASK) != 0;
+    byte value = (byte) (header.toInt() & FORWARDING_MASK);
+    return (value == BEING_FORWARDED)  || (value == FORWARDED);
   }
 
   /**
